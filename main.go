@@ -52,7 +52,6 @@ func main() {
 
 // upload an image from the webserver
 func serverImageUploadHandler(context *gin.Context) {
-
 	s3Client := setupAWSS3Client()
 
 	file, err := context.FormFile("image")
@@ -69,11 +68,14 @@ func serverImageUploadHandler(context *gin.Context) {
 	}
 	defer uploadedFile.Close()
 
-	// Upload file to S3
+	// Upload file to S3 with metadata
 	_, err = s3Client.PutObject(&s3.PutObjectInput{
 		Bucket: aws.String(os.Getenv("S3_BUCKET_NAME")),
 		Key:    aws.String(file.Filename),
 		Body:   uploadedFile,
+		Metadata: map[string]*string{
+			"uploader": aws.String("anonymous"),
+		},
 	})
 
 	if err != nil {
@@ -86,7 +88,6 @@ func serverImageUploadHandler(context *gin.Context) {
 
 // Fetch images
 func serverImageReceiveHandler(context *gin.Context) {
-
 	s3Client := setupAWSS3Client()
 
 	// List objects in S3 bucket
@@ -99,12 +100,29 @@ func serverImageReceiveHandler(context *gin.Context) {
 		return
 	}
 
-	// Extract object keys from the result
-	var objectKeys []string
+	// Extract object keys and additional information from the result
+	var images []gin.H
 	for _, item := range result.Contents {
-		objectKeys = append(objectKeys, *item.Key)
+		// Get additional information (e.g., file size) for each object
+		headOutput, err := s3Client.HeadObject(&s3.HeadObjectInput{
+			Bucket: aws.String(os.Getenv("S3_BUCKET_NAME")),
+			Key:    item.Key,
+		})
+
+		if err != nil {
+			context.JSON(http.StatusInternalServerError, gin.H{"error": "Error retrieving object details from S3"})
+			return
+		}
+
+		// Add object details to the list
+		images = append(images, gin.H{
+			"key":          *item.Key,
+			"uploader":     headOutput.Metadata["Uploader"], // Use capitalized character
+			"size":         *headOutput.ContentLength,
+			"lastModified": headOutput.LastModified,
+		})
 	}
 
-	// Return the list of images as JSON
-	context.JSON(http.StatusOK, gin.H{"images": objectKeys})
+	// Return the list of images with additional information as JSON
+	context.JSON(http.StatusOK, gin.H{"images": images})
 }
