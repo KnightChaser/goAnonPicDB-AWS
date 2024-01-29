@@ -18,7 +18,7 @@ func init() {
 	}
 }
 
-func setupAWSClient() s3.S3 {
+func setupAWSS3Client() s3.S3 {
 	// Set up AWS S3 client
 	awsConfig := aws.NewConfig().WithRegion(os.Getenv("AWS_REGION"))
 	awsSession := session.Must(session.NewSession(awsConfig))
@@ -37,6 +37,9 @@ func main() {
 	// Route to upload image
 	router.POST("/upload", serverImageUploadHandler)
 
+	// Route to view(fetch) images
+	router.GET("/images", serverImageReceiveHandler)
+
 	// Route to serve the HTML file
 	router.GET("/", func(c *gin.Context) {
 		c.HTML(http.StatusOK, "index.html", gin.H{})
@@ -49,7 +52,7 @@ func main() {
 // upload an image from the webserver
 func serverImageUploadHandler(context *gin.Context) {
 
-	s3Client := setupAWSClient()
+	s3Client := setupAWSS3Client()
 
 	file, err := context.FormFile("image")
 	if err != nil {
@@ -78,4 +81,29 @@ func serverImageUploadHandler(context *gin.Context) {
 	}
 
 	context.JSON(http.StatusOK, gin.H{"message": "Image uploaded successfully"})
+}
+
+// Fetch images
+func serverImageReceiveHandler(context *gin.Context) {
+
+	s3Client := setupAWSS3Client()
+
+	// List objects in S3 bucket
+	result, err := s3Client.ListObjectsV2(&s3.ListObjectsV2Input{
+		Bucket: aws.String(os.Getenv("S3_BUCKET_NAME")),
+	})
+
+	if err != nil {
+		context.JSON(http.StatusInternalServerError, gin.H{"error": "Error listing objects in S3 bucket"})
+		return
+	}
+
+	// Extract object keys from the result
+	var objectKeys []string
+	for _, item := range result.Contents {
+		objectKeys = append(objectKeys, *item.Key)
+	}
+
+	// Return the list of images as JSON
+	context.JSON(http.StatusOK, gin.H{"images": objectKeys})
 }
