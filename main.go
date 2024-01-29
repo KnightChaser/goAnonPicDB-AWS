@@ -33,6 +33,7 @@ func main() {
 
 	// Serve static files (HTML, CSS, JS)
 	router.LoadHTMLGlob("static/*")
+	router.Static("/static", "./static")
 
 	// Route to upload image
 	router.POST("/upload", serverImageUploadHandler)

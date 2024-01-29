@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -18,19 +17,7 @@
     <h2>Uploaded Images</h2>
     <ul id="imageList"></ul>
 
-    <script>
-        // Fetch the list of uploaded images and repeatedly show it on the page.
-        fetch("/images")
-            .then(response => response.json())
-            .then(data => {
-                const imageList = document.getElementById("imageList");
-                data.images.forEach(image => {
-                    const listItem = document.createElement("li");
-                    listItem.textContent = image;
-                    imageList.appendChild(listItem);
-                });
-            })
-            .catch(error => console.error("Error fetching image list:", error));
-    </script>
+    <!-- Include the JavaScript file -->
+    <script src="/static/index.js"></script>
 </body>
 </html>
