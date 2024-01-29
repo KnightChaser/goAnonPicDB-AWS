@@ -87,7 +87,9 @@ func serverImageUploadHandler(context *gin.Context) {
 		return
 	}
 
-	context.JSON(http.StatusOK, gin.H{"message": "Image uploaded successfully"})
+	// Redirect to the "upload_success.html" page
+	context.Redirect(http.StatusSeeOther, "/static/upload_success.html")
+
 }
 
 // Fetch images

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AWS S3 Bucket Image Uploader</title>
+</head>
+<body>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10" type="text/javascript"></script>
+    <script>
+        Swal.fire({
+            icon: 'success',
+            title: 'OK',
+            text: 'Image successfully uploaded to AWS S3 Bucket',
+            showConfirmButton: false,
+            timerProgressBar: true,
+            timer: 1500
+        }).then((result) => {
+            window.location.href = "/static/index.html";
+        });
+    </script>
+</body>
+</html>

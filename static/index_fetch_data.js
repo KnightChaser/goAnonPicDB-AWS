@@ -1,4 +1,3 @@
-// Fetch the list of uploaded images and repeatedly show them on the page.
 document.addEventListener("DOMContentLoaded", function() {
     // Fetch the list of uploaded images
     fetch("/images")
@@ -49,7 +48,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 // Display the date
                 const lastModifiedDate = document.createElement("p");
                 lastModifiedDate.classList.add("card-text");
-                lastModifiedDate.innerHTML = `<b>Last modified:</b> <code>${image.lastModified}<code>`;
+                lastModifiedDate.innerHTML = `<b>Last modified:</b> <code>${image.lastModified}</code>`;
                 cardBodyDiv.appendChild(lastModifiedDate);
 
                 // Display the size
