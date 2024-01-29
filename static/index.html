@@ -10,13 +10,19 @@
 </head>
 <body>
     <div class="container mt-5">
-        <h1 class="mb-4">AWS S3 Bucket Image Uploader</h1>
+        <h1 class="mb-4"><b>AWS S3 Bucket</b> Image Uploader</h1>
         
         <form action="/upload" method="post" enctype="multipart/form-data" id="uploading_form">
             <div class="mb-3">
-                <label for="image" class="form-label">Choose an image:</label>
+                <label for="image" class="form-label">Choose an <b>image</b> to upload</label>
                 <input type="file" class="form-control" name="image" id="image" accept="image/*" required>
             </div>
+            <div class="col-md-4">
+                <label for="nickname" class="form-label"><b>Who</b> are you?</label>
+                <input type="text" class="form-control" id="uploader" name="uploader" placeholder="anonymous"
+                    value="anonymous">
+            </div>
+            <br>
             <button type="button" class="btn btn-primary" id="upload_button">Upload</button>
         </form>
 

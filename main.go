@@ -62,6 +62,8 @@ func serverImageUploadHandler(context *gin.Context) {
 		return
 	}
 
+	uploader := context.Request.FormValue("uploader")
+
 	// Open the file
 	uploadedFile, err := file.Open()
 	if err != nil {
@@ -76,7 +78,7 @@ func serverImageUploadHandler(context *gin.Context) {
 		Key:    aws.String(file.Filename),
 		Body:   uploadedFile,
 		Metadata: map[string]*string{
-			"uploader": aws.String("anonymous"),
+			"uploader": aws.String(uploader),
 		},
 	})
 
