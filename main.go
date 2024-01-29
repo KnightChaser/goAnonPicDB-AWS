@@ -35,7 +35,6 @@ func main() {
 
 	// Serve static files (HTML, CSS, JS)
 	router.LoadHTMLGlob("static/**/*") // Because /static/ has a one more depth subdirectory
-	router.LoadHTMLGlob("static/asset/*.png")
 	router.Static("/static", "./static")
 
 	// Route to upload image
