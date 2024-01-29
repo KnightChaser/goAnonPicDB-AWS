@@ -3,8 +3,8 @@ package main
 import (
 	"fmt"
 	"net/http"
+	"net/url"
 	"os"
-	"strings"
 
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/session"
@@ -129,7 +129,7 @@ func serverImageReceiveHandler(context *gin.Context) {
 			"objectAccessURL": fmt.Sprintf("https://%s.s3.%s.amazonaws.com/%s",
 				os.Getenv("S3_BUCKET_NAME"),
 				os.Getenv("AWS_REGION"),
-				strings.Replace(*item.Key, " ", "+", -1)),
+				url.QueryEscape(*item.Key)),
 		})
 	}
 
