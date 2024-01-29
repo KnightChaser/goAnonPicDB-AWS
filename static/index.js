@@ -1,4 +1,4 @@
-// Fetch the list of uploaded images and repeatedly show it on the page.
+// Fetch the list of uploaded images and repeatedly show them on the page.
 document.addEventListener("DOMContentLoaded", function() {
     // Fetch the list of uploaded images
     fetch("/images")
@@ -7,13 +7,20 @@ document.addEventListener("DOMContentLoaded", function() {
             const imageList = document.getElementById("imageList");
             data.images.forEach(image => {
                 const listItem = document.createElement("li");
+                listItem.classList.add("list-group-item");
+
+                // Create an image element
+                const imgElement = document.createElement("img");
+                imgElement.src = image.objectAccessURL; // Set the image source from the pre-signed URL
+                imgElement.alt = image.key;             // Set alt text
+                imgElement.classList.add("img-thumbnail", "mw-100");
 
                 // Create a div to display image details
                 const detailsDiv = document.createElement("div");
 
                 // Display the key (filename)
                 const keyElement = document.createElement("p");
-                keyElement.textContent = `Key: ${image.key}`;
+                keyElement.textContent = `Name: ${image.key}`;
                 detailsDiv.appendChild(keyElement);
 
                 // Display the uploader
@@ -31,7 +38,8 @@ document.addEventListener("DOMContentLoaded", function() {
                 lastModifiedDate.textContent = `Last modified: ${image.lastModified}`;
                 detailsDiv.appendChild(lastModifiedDate);
 
-                // Append the details div to the list item
+                // Append the image and details div to the list item
+                listItem.appendChild(imgElement);
                 listItem.appendChild(detailsDiv);
 
                 // Append the list item to the image list
