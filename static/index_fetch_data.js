@@ -43,20 +43,20 @@ document.addEventListener("DOMContentLoaded", function() {
                 // Display the uploader
                 const uploaderElement = document.createElement("p");
                 uploaderElement.classList.add("card-text");
-                uploaderElement.innerHTML = `<b>Uploader:</b> ${image.uploader}`;
+                uploaderElement.innerHTML = `<b>Uploader:</b> <code>${image.uploader}</code>`;
                 cardBodyDiv.appendChild(uploaderElement);
+
+                // Display the date
+                const lastModifiedDate = document.createElement("p");
+                lastModifiedDate.classList.add("card-text");
+                lastModifiedDate.innerHTML = `<b>Last modified:</b> <code>${image.lastModified}<code>`;
+                cardBodyDiv.appendChild(lastModifiedDate);
 
                 // Display the size
                 const sizeElement = document.createElement("p");
                 sizeElement.classList.add("card-text");
                 sizeElement.innerHTML = `<b>Size:</b> ${image.size} bytes`;
                 cardBodyDiv.appendChild(sizeElement);
-
-                // Display the date
-                const lastModifiedDate = document.createElement("p");
-                lastModifiedDate.classList.add("card-text");
-                lastModifiedDate.innerHTML = `<b>Last modified:</b> ${image.lastModified}`;
-                cardBodyDiv.appendChild(lastModifiedDate);
 
                 // Append elements to form the card structure
                 cardDiv.appendChild(imgElement);
