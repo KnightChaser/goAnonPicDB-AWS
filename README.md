@@ -9,8 +9,6 @@
 
 **goAnonPicDB-AWS** is a variant of **[`KnightChaser/goAnonPicDB`](https://github.com/KnightChaser/goAnonPicDB)**, which is a simple web service that allows users to anonymously upload images. **Amazon AWS S3 Bucket** associated with the account and bucket described in `/.env`(environment variable file) will store the images that users uploaded and the server written in Go(using `gin` web framework) will interact with the cloud service. Yes, S3 is like CDN(Content Delivery Network) in this project.
 
-**CI/CD status**: [![build and dockerize the application](https://github.com/KnightChaser/goAnonPicDB-AWS/actions/workflows/main.yml/badge.svg)](https://github.com/KnightChaser/goAnonPicDB-AWS/actions/workflows/main.yml)
-
 ## Preview
 User interactive page running on `localhost:[YOUR_OWN_PORT_NAME]`
 <img src="./README_pictures/s1.png" width="800px">
@@ -51,8 +49,7 @@ Make sure that Amazon AWS S3 Bucket has appropriate granted access. For example,
 ```
 
 ## Future work
-- [X] Dockerizing applications
-- [ ] Integrate automatic Docker deployment with GitHub Workflow
+- [X] Dockerizing applications (It requires `.env` file. Adopting `.env` to GitHub workflow for automatic Docker deployment is not feasible.)
 - ~~[ ] After dockerization, test and deploy this application to Amazon EC2~~
 
 
