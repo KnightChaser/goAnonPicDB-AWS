@@ -24,6 +24,9 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       - name: Build and release to DockerHub
+        uses: docker/build-push-action@v5
+        with:
+          context: .
         env:
           NAME: knightchaser      # DockerHub account name
           REPO: goanonpicdb-aws   # DockerHub repository name
