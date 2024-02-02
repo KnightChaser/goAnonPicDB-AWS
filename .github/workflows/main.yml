@@ -14,3 +14,20 @@ jobs:
           go-version: 1.21
       - name: Build
         run: go build -v .
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Login to Dockerhub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Build and release to DockerHub
+        env:
+          NAME: knightchaser      # DockerHub account name
+          REPO: goanonpicdb-aws   # DockerHub repository name
+        run: |
+          docker build --tag $REPO .
+          docker tag $REPO $NAME/$REPO:latest
+          docekr push $NAME/$REPO:latest
