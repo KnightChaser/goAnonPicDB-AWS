@@ -22,8 +22,8 @@ jobs:
       # using the secrets.ENV_FILE secret
       - name: Create env file
         run: |
-          touch .env
-          echo "${{ secrets.ENV_FILE }}" > .env
+          touch ./.env
+          echo "${{ secrets.ENV_FILE }}" > ./.env
       - name: Login to Dockerhub
         uses: docker/login-action@v3
         with:
