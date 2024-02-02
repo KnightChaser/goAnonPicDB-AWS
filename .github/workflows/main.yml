@@ -24,10 +24,7 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       - name: Build and release to DockerHub
-        env:
-          NAME: knightchaser      # DockerHub account name
-          REPO: goanonpicdb-aws   # DockerHub repository name
-        run: |
-          docker build --tag $NAME/$REPO .
-          docker tag $NAME/$REPO:latest $NAME/$REPO:latest
-          docker push $NAME/$REPO:latest
+        uses: docker/build-push-action@v2
+        with:
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/goanonpicdb-aws:latest
