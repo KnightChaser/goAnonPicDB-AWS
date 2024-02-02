@@ -29,5 +29,5 @@ jobs:
           REPO: goanonpicdb-aws   # DockerHub repository name
         run: |
           docker build --tag $REPO .
-          docker tag $REPO $NAME/$REPO:latest
-          docekr push $NAME/$REPO:latest
+          docker tag $REPO:latest $NAME/$REPO:latest
+          docker push $NAME/$REPO:latest
