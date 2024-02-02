@@ -45,11 +45,11 @@ func main() {
 
 	// Route to serve the HTML file
 	router.GET("/", func(c *gin.Context) {
-		c.HTML(http.StatusOK, "index.html", gin.H{})
+		c.Redirect(http.StatusSeeOther, "/static/index.html")
 	})
 
 	// Run the server
-	router.Run(":8080")
+	router.Run(fmt.Sprintf(":%s", os.Getenv("CLIENT_WEB_ACCESS_PORT"))) // e.g., ":8080"
 }
 
 // upload an image from the webserver
