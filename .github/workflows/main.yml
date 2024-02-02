@@ -28,6 +28,6 @@ jobs:
           NAME: knightchaser      # DockerHub account name
           REPO: goanonpicdb-aws   # DockerHub repository name
         run: |
-          docker build --tag $REPO .
+          docker build --tag $REPO ./Dockerfile
           docker tag $REPO:latest $NAME/$REPO:latest
           docker push $NAME/$REPO:latest
