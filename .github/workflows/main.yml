@@ -24,8 +24,8 @@ jobs:
         run: |
           touch .env
           echo "${{ secrets.ENV_FILE }}" > .env
-          cat .env
-          pwd
+          pwd 
+          ls -al .
       - name: Login to Dockerhub
         uses: docker/login-action@v3
         with:
@@ -34,7 +34,5 @@ jobs:
       - name: Build and release to DockerHub
         uses: docker/build-push-action@v2
         with:
-          run: |
-            pwd
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/goanonpicdb-aws:latest
