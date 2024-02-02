@@ -5,7 +5,7 @@ on:
       - main
 jobs:
   build:
-    runs-on: Ubuntu-lastest
+    runs-on: ubuntu-lastest
     steps:
       - uses: actions/checkout@v4
       - name: Set up Go
