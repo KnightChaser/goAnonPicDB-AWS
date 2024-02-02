@@ -24,12 +24,10 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       - name: Build and release to DockerHub
-        with:
-          context: .
         env:
           NAME: knightchaser      # DockerHub account name
           REPO: goanonpicdb-aws   # DockerHub repository name
         run: |
-          docker build --tag $REPO ./Dockerfile
-          docker tag $REPO:latest $NAME/$REPO:latest
+          docker build --tag $NAME/$REPO .
+          docker tag $NAME/$REPO:latest $NAME/$REPO:latest
           docker push $NAME/$REPO:latest
