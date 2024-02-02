@@ -27,6 +27,7 @@ jobs:
         # Because the .env file is not in the repository, we need to create it
         # using the secrets.ENV_FILE secret
         run: |
+          ls -al .
           touch .env
           echo "${{ secrets.ENV_FILE }}" > .env
           docker build --tag "${{ secrets.DOCKERHUB_USERNAME }}/goanonpicdb-aws:latest" .
